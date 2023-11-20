@@ -32,13 +32,13 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  final myitems = [
-    Image.asset('assets/images/image01.png'),
-    Image.asset('assets/images/image02.png'),
-    Image.asset('assets/images/image03.png'),
-    Image.asset('assets/images/image04.png'),
-    Image.asset('assets/images/image05.png'),
-    Image.asset('assets/images/image06.png'),
+  final myItems = [
+    {'image': 'assets/images/image01.png', 'text': 'Text 1'},
+    {'image': 'assets/images/image02.png', 'text': 'Text 2'},
+    {'image': 'assets/images/image03.png', 'text': 'Text 3'},
+    {'image': 'assets/images/image04.png', 'text': 'Text 4'},
+    {'image': 'assets/images/image05.png', 'text': 'Text 5'},
+    {'image': 'assets/images/image06.png', 'text': 'Text 6'},
   ];
 
   int myCurrentIndex = 0;
@@ -54,16 +54,35 @@ class _MyHomePageState extends State<MyHomePage> {
         children: [
           CarouselSlider(
             options: CarouselOptions(
-                autoPlay: true,
-                height: 200,
-                enlargeCenterPage: true,
-                onPageChanged: (index, reason) {
-                  setState(() {
-                    myCurrentIndex = index;
-                  });
-                }),
-            items: myitems,
-          )
+              autoPlay: false,
+              height: 350,
+              enlargeCenterPage: true,
+              onPageChanged: (index, reason) {
+                setState(() {
+                  myCurrentIndex = index;
+                });
+              },
+            ),
+            items: myItems.map((item) {
+              return Builder(
+                builder: (BuildContext context) {
+                  return Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Image.asset(
+                          item['image'] ?? ''), // Use null-aware operator
+                      SizedBox(
+                          height: 25), // Add some space between image and text
+                      Text(
+                        item['text'] ?? '', // Use null-aware operator
+                        style: TextStyle(fontSize: 30,fontWeight: FontWeight.bold),
+                      ),
+                    ],
+                  );
+                },
+              );
+            }).toList(),
+          ),
         ],
       ),
     );
