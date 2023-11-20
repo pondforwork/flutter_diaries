@@ -32,6 +32,17 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  final myitems = [
+    Image.asset('assets/images/image01.png'),
+    Image.asset('assets/images/image02.png'),
+    Image.asset('assets/images/image03.png'),
+    Image.asset('assets/images/image04.png'),
+    Image.asset('assets/images/image05.png'),
+    Image.asset('assets/images/image06.png'),
+  ];
+
+  int myCurrentIndex = 0;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,38 +51,18 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text(widget.title),
       ),
       body: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          const SizedBox(
-            height: 60,
-          ),
-          Card(
-            child: Container(
-              height: 350.0,
-              width: 350,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Center(
-                    child: Image.network(
-                      'https://img.freepik.com/free-photo/side-view-smiley-woman-holding-hen_23-2149456919.jpg?w=2000&t=st=1700474527~exp=1700475127~hmac=f8e772c940c9fdc0f4fb4154c068702b8a1f4f7212f99528feb1014fe5f92f64', // Replace with your image URL
-                      height: 300.0, // Set the desired height for the image
-                      width: 400.0, // Set the desired width for the image
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-          const SizedBox(
-            height: 30,
-          ),
-          Center(
-            child: Text(
-              "Diary Title",
-              style: TextStyle(fontSize: 30),
-            ),
+          CarouselSlider(
+            options: CarouselOptions(
+                autoPlay: true,
+                height: 200,
+                enlargeCenterPage: true,
+                onPageChanged: (index, reason) {
+                  setState(() {
+                    myCurrentIndex = index;
+                  });
+                }),
+            items: myitems,
           )
         ],
       ),
