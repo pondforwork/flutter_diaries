@@ -16,7 +16,10 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
+        scaffoldBackgroundColor: Colors.green,
       ),
+      // theme: new ThemeData(scaffoldBackgroundColor: const Color(#FFEFEF)),
+
       home: const MyHomePage(title: 'Flutter Diaries'),
     );
   }
@@ -52,11 +55,15 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       body: Column(
         children: [
+          SizedBox(
+            height: 50,
+          ),
           CarouselSlider(
             options: CarouselOptions(
               autoPlay: false,
-              height: 350,
+              height: 500,
               enlargeCenterPage: true,
+              aspectRatio: 3 / 4,
               onPageChanged: (index, reason) {
                 setState(() {
                   myCurrentIndex = index;
@@ -70,12 +77,19 @@ class _MyHomePageState extends State<MyHomePage> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Image.asset(
-                          item['image'] ?? ''), // Use null-aware operator
+                        item['image'] ?? '',
+                        width: 300,
+                        height: 400,
+                        fit: BoxFit
+                            .cover, // Use BoxFit.cover to maintain aspect ratio
+                      ), // Use null-aware operator
+
                       SizedBox(
                           height: 25), // Add some space between image and text
                       Text(
                         item['text'] ?? '', // Use null-aware operator
-                        style: TextStyle(fontSize: 30,fontWeight: FontWeight.bold),
+                        style: TextStyle(
+                            fontSize: 30, fontWeight: FontWeight.bold),
                       ),
                     ],
                   );
