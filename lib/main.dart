@@ -58,7 +58,7 @@ class _MyHomePageState extends State<MyHomePage> {
       body: Column(
         children: [
           const SizedBox(
-            height: 100,
+            height: 80,
           ),
           CarouselSlider(
             options: CarouselOptions(
@@ -80,7 +80,9 @@ class _MyHomePageState extends State<MyHomePage> {
                       print(myCurrentIndex);
                       Navigator.push(context,
                           MaterialPageRoute(builder: (context) {
-                        return FormScreen();
+                        return FormScreen(
+                          imageData: myItems[myCurrentIndex],
+                        );
                       }));
                     },
                     child: Column(
