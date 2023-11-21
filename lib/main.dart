@@ -56,7 +56,7 @@ class _MyHomePageState extends State<MyHomePage> {
       // ),
       body: Column(
         children: [
-          SizedBox(
+          const SizedBox(
             height: 130,
           ),
           CarouselSlider(
@@ -74,30 +74,39 @@ class _MyHomePageState extends State<MyHomePage> {
             items: myItems.map((item) {
               return Builder(
                 builder: (BuildContext context) {
-                  return Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Image.asset(
-                        item['image'] ?? '',
-                        width: 300,
-                        height: 400,
-                        fit: BoxFit
-                            .cover, // Use BoxFit.cover to maintain aspect ratio
-                      ), // Use null-aware operator
-
-                      const SizedBox(
-                          height: 25), // Add some space between image and text
-                      Text(
-                        item['text'] ?? '', // Use null-aware operator
-                        style: const TextStyle(
-                            fontSize: 30, fontWeight: FontWeight.bold),
-                      ),
-                    ],
+                  return GestureDetector(
+                    onTap: () {
+                      // Handle tap action here
+                      print('Image tapped!');
+                    },
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Image.asset(
+                          item['image'] ?? '',
+                          width: 300,
+                          height: 400,
+                          fit: BoxFit
+                              .cover, // Use BoxFit.cover to maintain aspect ratio
+                        ), // Use null-aware operator
+                        const SizedBox(
+                            height:
+                                25), // Add some space between image and text
+                        Text(
+                          item['text'] ?? '', // Use null-aware operator
+                          style: const TextStyle(
+                              fontSize: 30, fontWeight: FontWeight.bold),
+                        ),
+                      ],
+                    ),
                   );
                 },
               );
             }).toList(),
-          ),SizedBox(height: 150,),
+          ),
+          SizedBox(
+            height: 150,
+          ),
           AnimatedSmoothIndicator(
             activeIndex: myCurrentIndex,
             count: myItems.length,
