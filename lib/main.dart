@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
-        scaffoldBackgroundColor: Colors.green,
+        scaffoldBackgroundColor: Colors.yellow,
       ),
       // theme: new ThemeData(scaffoldBackgroundColor: const Color(#FFEFEF)),
 
@@ -49,14 +49,14 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text(widget.title),
-      ),
+      // appBar: AppBar(
+      //   backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+      //   title: Text(widget.title),
+      // ),
       body: Column(
         children: [
           SizedBox(
-            height: 50,
+            height: 130,
           ),
           CarouselSlider(
             options: CarouselOptions(
@@ -84,11 +84,11 @@ class _MyHomePageState extends State<MyHomePage> {
                             .cover, // Use BoxFit.cover to maintain aspect ratio
                       ), // Use null-aware operator
 
-                      SizedBox(
+                      const SizedBox(
                           height: 25), // Add some space between image and text
                       Text(
                         item['text'] ?? '', // Use null-aware operator
-                        style: TextStyle(
+                        style: const TextStyle(
                             fontSize: 30, fontWeight: FontWeight.bold),
                       ),
                     ],
