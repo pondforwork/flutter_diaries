@@ -76,8 +76,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 builder: (BuildContext context) {
                   return GestureDetector(
                     onTap: () {
-                      // Handle tap action here
-                      print('Image tapped!');
+                      print(myCurrentIndex);
                     },
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
