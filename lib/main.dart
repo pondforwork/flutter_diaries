@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:flutter_diaries/screens/reading.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 void main() {
@@ -57,7 +58,7 @@ class _MyHomePageState extends State<MyHomePage> {
       body: Column(
         children: [
           const SizedBox(
-            height: 130,
+            height: 100,
           ),
           CarouselSlider(
             options: CarouselOptions(
@@ -77,6 +78,10 @@ class _MyHomePageState extends State<MyHomePage> {
                   return GestureDetector(
                     onTap: () {
                       print(myCurrentIndex);
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) {
+                        return FormScreen();
+                      }));
                     },
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
