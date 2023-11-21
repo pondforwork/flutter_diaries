@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 void main() {
   runApp(const MyApp());
@@ -96,7 +97,20 @@ class _MyHomePageState extends State<MyHomePage> {
                 },
               );
             }).toList(),
-          ),
+          ),SizedBox(height: 150,),
+          AnimatedSmoothIndicator(
+            activeIndex: myCurrentIndex,
+            count: myItems.length,
+            effect: const SlideEffect(
+                spacing: 7.0,
+                radius: 90,
+                dotWidth: 10.0,
+                dotHeight: 10.0,
+                paintStyle: PaintingStyle.stroke,
+                strokeWidth: 1.5,
+                dotColor: Colors.grey,
+                activeDotColor: const Color.fromARGB(255, 240, 243, 255)),
+          )
         ],
       ),
     );
