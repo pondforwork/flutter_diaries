@@ -38,7 +38,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   final myItems = [
-    {'image': 'assets/images/image01.png', 'text': 'Text 1'},
+    {'image': 'assets/images/image01.png', 'text': 'Chilling On Holiday', 'textDetail': 'lorem20'},
     {'image': 'assets/images/image02.png', 'text': 'Text 2'},
     {'image': 'assets/images/image03.png', 'text': 'Text 3'},
     {'image': 'assets/images/image04.png', 'text': 'Text 4'},

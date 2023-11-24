@@ -18,17 +18,20 @@ class FormScreen extends StatelessWidget {
           children: [
             Card(
               child: Container(
-                height: 300.0,
-                width: 300,
+                height: 350.0,
+                width: 500,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
+                    const SizedBox(
+                      height: 10,
+                    ),
                     Center(
                       child: Image.asset(
                         imageData['image'],
-                        width: 200,
-                        height: 200,
+                        width: 400,
+                        height: 300,
                         fit: BoxFit.cover,
                       ),
                       // child: Image.asset('image01.png')
@@ -37,7 +40,13 @@ class FormScreen extends StatelessWidget {
                 ),
               ),
             ),
-            Text("Test")
+            const SizedBox(
+              height: 30,
+            ),
+            Text(
+              imageData['text'],
+              style: const TextStyle(fontSize: 30, fontWeight: FontWeight.normal),
+            )
           ],
         )),
       ),
