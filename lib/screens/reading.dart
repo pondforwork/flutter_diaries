@@ -10,7 +10,7 @@ class FormScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.green,
       appBar: AppBar(
-        title: const Text("Test"),
+        title: Text(imageData['text']),
       ),
       body: Container(
         child: Center(
@@ -18,20 +18,20 @@ class FormScreen extends StatelessWidget {
           children: [
             Card(
               child: Container(
-                height: 350.0,
-                width: 500,
+                height: 420.0,
+                width: 320,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    const SizedBox(
-                      height: 10,
-                    ),
+                    // const SizedBox(
+                    //   height: 10,
+                    // ),
                     Center(
                       child: Image.asset(
                         imageData['image'],
-                        width: 400,
-                        height: 300,
+                        width: 300,
+                        height: 400,
                         fit: BoxFit.cover,
                       ),
                       // child: Image.asset('image01.png')

@@ -38,12 +38,36 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   final myItems = [
-    {'image': 'assets/images/image01.png', 'text': 'Chilling On Holiday', 'textDetail': 'lorem20'},
-    {'image': 'assets/images/image02.png', 'text': 'Text 2'},
-    {'image': 'assets/images/image03.png', 'text': 'Text 3'},
-    {'image': 'assets/images/image04.png', 'text': 'Text 4'},
-    {'image': 'assets/images/image05.png', 'text': 'Text 5'},
-    {'image': 'assets/images/image06.png', 'text': 'Text 6'},
+    {
+      'image': 'assets/images/image01.jpg',
+      'text': 'Chilling On Holiday',
+      'textDetail': 'lorem20'
+    },
+    {
+      'image': 'assets/images/image02.jpg',
+      'text': 'Text 2',
+      'textDetail': 'lorem20'
+    },
+    {
+      'image': 'assets/images/image03.jpg',
+      'text': 'Text 3',
+      'textDetail': 'lorem20'
+    },
+    {
+      'image': 'assets/images/image04.png',
+      'text': 'Text 4',
+      'textDetail': 'lorem20'
+    },
+    {
+      'image': 'assets/images/image05.png',
+      'text': 'Text 5',
+      'textDetail': 'lorem20'
+    },
+    {
+      'image': 'assets/images/image06.png',
+      'text': 'Text 6',
+      'textDetail': 'lorem20'
+    },
   ];
 
   int myCurrentIndex = 0;
@@ -88,12 +112,17 @@ class _MyHomePageState extends State<MyHomePage> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Image.asset(
-                          item['image'] ?? '',
-                          width: 300,
-                          height: 400,
-                          fit: BoxFit
-                              .cover, // Use BoxFit.cover to maintain aspect ratio
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(
+                              20.0), // Set your desired border radius
+
+                          child: Image.asset(
+                            item['image'] ?? '',
+                            width: 300,
+                            height: 400,
+                            fit: BoxFit
+                                .cover, // Use BoxFit.cover to maintain aspect ratio
+                          ),
                         ), // Use null-aware operator
                         const SizedBox(
                             height:
