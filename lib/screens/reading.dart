@@ -43,9 +43,12 @@ class FormScreen extends StatelessWidget {
             const SizedBox(
               height: 30,
             ),
-            Text(
-              imageData['text'],
-              style: const TextStyle(fontSize: 30, fontWeight: FontWeight.normal),
+            Container(
+              child: Center(child: Text(
+                imageData['text'],
+                style: const TextStyle(
+                    fontSize: 30, fontWeight: FontWeight.bold),
+              )),
             )
           ],
         )),

@@ -41,7 +41,7 @@ class _MyHomePageState extends State<MyHomePage> {
     {
       'image': 'assets/images/image01.jpg',
       'text': 'Chilling On Holiday',
-      'textDetail': 'lorem20'
+      'textDetail': 'lorem20fasdfdsdfsafdsffgdjnfgsdnklgkljgkljdgjkfgdjlkgfd;jkgfdsjlkgfjklklgfgdjklgfdkjfgdsjklfgsdjklfgdsjklgfdsjlgdfljk'
     },
     {
       'image': 'assets/images/image02.jpg',
