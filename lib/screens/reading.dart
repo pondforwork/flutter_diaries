@@ -9,15 +9,20 @@ class FormScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.green,
-      appBar: AppBar(
-        title: Text(imageData['text']),
-      ),
+      // appBar: AppBar(
+      //   title: Text(imageData['text']),
+      // ),
       body: SingleChildScrollView(
         child: Container(
           child: Center(
             child: Column(
               children: [
+                SizedBox(
+                  height: 80,
+                ),
                 Card(
+                  color: Colors.cyan, // Change this to the color you desire
+
                   child: Container(
                     height: 420.0,
                     width: 320,
@@ -47,6 +52,21 @@ class FormScreen extends StatelessWidget {
                       style: const TextStyle(
                         fontSize: 30,
                         fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ),
+                Container(
+                  child: Center(
+                    child: Padding(
+                      padding: EdgeInsets.only(left: 15.0, right: 15.0),
+                      child: Text(
+                        imageData['textDetail']!,
+                        style: const TextStyle(
+                          fontSize: 15,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                        ),
                       ),
                     ),
                   ),
