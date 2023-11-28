@@ -1,3 +1,4 @@
+import 'package:flutter_diaries/models/diaries.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 
@@ -9,25 +10,31 @@ class DatabaseHelper {
   DatabaseHelper._init();
 
   Future<Database> get database async {
-    if(_database != null) return _database!;
+    if (_database != null) return _database!;
     _database = await _initDB('notes.db');
     return _database!;
   }
 
-  Future<Database> _initDB(String filePath) async{
+  Future<Database> _initDB(String filePath) async {
     final dbPath = await getDatabasesPath();
-    final path = join(dbPath,filePath);
-    return await openDatabase(path,version: 1,onCreate: _createDB);
+    final path = join(dbPath, filePath);
+    return await openDatabase(path, version: 1, onCreate: _createDB);
   }
 
-  Future _createDB(Database db,int version) async{
-
+  Future _createDB(Database db, int version) async {
+    await db.execute('''
+CREATE TABLE ${NoteTable.id} INTEGER PRIMARY KEY AUTOINCREMENT,
+             ${NoteTable.image} TEXT NOT NULL,
+             ${NoteTable.title} TEXT NOT NULL,
+             ${NoteTable.story} TEXT NOT NULL
+)
+''');
   }
+
+  
 
   Future close() async {
     final db = await instance.database;
     db.close();
   }
-
-
 }
