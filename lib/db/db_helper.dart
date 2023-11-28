@@ -23,18 +23,25 @@ class DatabaseHelper {
 
   Future _createDB(Database db, int version) async {
     await db.execute('''
-CREATE TABLE ${NoteTable.id} INTEGER PRIMARY KEY AUTOINCREMENT,
-             ${NoteTable.image} TEXT NOT NULL,
-             ${NoteTable.title} TEXT NOT NULL,
-             ${NoteTable.story} TEXT NOT NULL
+CREATE TABLE diary (
+  ${NoteTable.id} INTEGER PRIMARY KEY AUTOINCREMENT,
+  ${NoteTable.image} TEXT NOT NULL,
+  ${NoteTable.title} TEXT NOT NULL,
+  ${NoteTable.story} TEXT NOT NULL
 )
 ''');
-  }
 
-  
+
+    
+  }
 
   Future close() async {
     final db = await instance.database;
     db.close();
   }
+
+  Future<List<Map<String, dynamic>>> getAllDiariesRaw() async {
+      final db = await instance.database;
+      return await db.rawQuery('SELECT * FROM diary');
+    }
 }

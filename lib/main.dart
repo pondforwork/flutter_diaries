@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:flutter_diaries/db/db_helper.dart';
 import 'package:flutter_diaries/screens/reading.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
@@ -41,7 +42,8 @@ class _MyHomePageState extends State<MyHomePage> {
     {
       'image': 'assets/images/image01.jpg',
       'text': 'Chilling On Holiday',
-      'textDetail': 'lorem20fasdfdsdfsafdsffgdjnfgsdnklgkljgkljdgjkfgdjlkgfd;jkgfdsjlkgfjklklgfgdjklgfdkjfgdsjklfgsdjklfgdsjklgfdsjlgdfljk'
+      'textDetail':
+          'lorem20fasdfdsdfsafdsffgdjnfgsdnklgkljgkljdgjkfgdjlkgfd;jkgfdsjlkgfjklklgfgdjklgfdkjfgdsjklfgsdjklfgdsjklgfdsjlgdfljk'
     },
     {
       'image': 'assets/images/image02.jpg',
@@ -74,6 +76,9 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    DatabaseHelper _databaseHelper =
+        DatabaseHelper.instance; // Create an instance of DatabaseHelper
+
     return Scaffold(
       // appBar: AppBar(
       //   backgroundColor: Theme.of(context).colorScheme.inversePrimary,
@@ -132,7 +137,6 @@ class _MyHomePageState extends State<MyHomePage> {
                           style: const TextStyle(
                               fontSize: 30, fontWeight: FontWeight.bold),
                         ),
-                      
                       ],
                     ),
                   );
@@ -157,6 +161,17 @@ class _MyHomePageState extends State<MyHomePage> {
                 activeDotColor: const Color.fromARGB(255, 240, 243, 255)),
           )
         ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () async {
+          // Call getAllDiariesRaw here
+          List<Map<String, dynamic>> diaries =
+              await _databaseHelper.getAllDiariesRaw();
+
+          // Do something with the retrieved data, for example, print it
+          print(diaries);
+        },
+        child: Text("Test"),
       ),
     );
   }
