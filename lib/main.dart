@@ -45,16 +45,16 @@ class _MyHomePageState extends State<MyHomePage> {
       'textDetail':
           'lorem20fasdfdsdfsafdsffgdjnfgsdnklgkljgkljdgjkfgdjlkgfd;jkgfdsjlkgfjklklgfgdjklgfdkjfgdsjklfgsdjklfgdsjklgfdsjlgdfljk'
     },
-    {
-      'image': 'assets/images/image02.jpg',
-      'text': 'Text 2',
-      'textDetail': 'lorem20'
-    },
-    {
-      'image': 'assets/images/image03.jpg',
-      'text': 'Text 3',
-      'textDetail': 'lorem20'
-    },
+    // {
+    //   'image': 'assets/images/image02.jpg',
+    //   'text': 'Text 2',
+    //   'textDetail': 'lorem20'
+    // },
+    // {
+    //   'image': 'assets/images/image03.jpg',
+    //   'text': 'Text 3',
+    //   'textDetail': 'lorem20'
+    // },
     {
       'image': 'assets/images/image04.png',
       'text': 'Text 4',
@@ -167,10 +167,13 @@ class _MyHomePageState extends State<MyHomePage> {
           // Call getAllDiariesRaw here
           List<Map<String, dynamic>> diaries =
               await _databaseHelper.getAllDiariesRaw();
-
-          // Do something with the retrieved data, for example, print it
+          _databaseHelper.close();
           print(diaries);
         },
+        // _databaseHelper.insertData();
+
+        // // Do something with the retrieved data, for example, print it
+
         child: Text("Test"),
       ),
     );

@@ -30,9 +30,6 @@ CREATE TABLE diary (
   ${NoteTable.story} TEXT NOT NULL
 )
 ''');
-
-
-    
   }
 
   Future close() async {
@@ -41,7 +38,14 @@ CREATE TABLE diary (
   }
 
   Future<List<Map<String, dynamic>>> getAllDiariesRaw() async {
-      final db = await instance.database;
-      return await db.rawQuery('SELECT * FROM diary');
-    }
+    final db = await instance.database;
+    return await db.rawQuery('SELECT * FROM diary');
+  }
+
+  insertData() async {
+    final db = await instance.database;
+    return await db.rawQuery('''INSERT INTO diary (_id, image, title, story)
+VALUES (1, 'example.jpg', 'Example Title', 'This is a sample story');
+''');
+  }
 }
