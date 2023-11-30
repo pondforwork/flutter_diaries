@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter_diaries/db/db_helper.dart';
+import 'package:flutter_diaries/screens/adddiaries.dart';
 import 'package:flutter_diaries/screens/reading.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
@@ -165,13 +166,14 @@ class _MyHomePageState extends State<MyHomePage> {
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
           // Call getAllDiariesRaw here
-          List<Map<String, dynamic>> diaries =
-              await _databaseHelper.getAllDiariesRaw();
+          // List<Map<String, dynamic>> diaries =
+          //     await _databaseHelper.getAllDiariesRaw();
 
-          print(diaries);
-          _databaseHelper.close();
-                //  _databaseHelper.insertData();
-
+          // print(diaries);
+          // _databaseHelper.close();
+          //  _databaseHelper.insertData();
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => AddDiariesForm()));
         },
         // _databaseHelper.insertData();
 
