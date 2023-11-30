@@ -2,13 +2,21 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
-class AddDiariesForm extends StatelessWidget {
+class AddDiariesForm extends StatefulWidget {
+  @override
+  _AddDiariesFormState createState() => _AddDiariesFormState();
+}
+
+class _AddDiariesFormState extends State<AddDiariesForm> {
+  File? _pickedImage;
+
   Future<void> pickImage() async {
     final image = await ImagePicker().pickImage(source: ImageSource.gallery);
     if (image != null) {
-      print(image.path);
+      setState(() {
+        _pickedImage = File(image.path);
+      });
     }
-    print("haha");
   }
 
   @override
@@ -21,13 +29,13 @@ class AddDiariesForm extends StatelessWidget {
             child: Column(
               children: [
                 const SizedBox(
-                  height: 200,
+                  height: 130,
                 ),
                 TextFormField(
                   decoration: const InputDecoration(
                     icon: Icon(Icons.person),
-                    hintText: 'What do people call you?',
-                    labelText: 'Name *',
+                    hintText: 'What is your memories?',
+                    labelText: 'Title',
                   ),
                   onSaved: (String? value) {
                     // This optional block of code can be used to run
@@ -42,8 +50,8 @@ class AddDiariesForm extends StatelessWidget {
                 TextFormField(
                   decoration: const InputDecoration(
                     icon: Icon(Icons.person),
-                    hintText: 'What do people call you?',
-                    labelText: 'Name *',
+                    hintText: 'How it\'s going',
+                    labelText: 'Details',
                   ),
                   onSaved: (String? value) {
                     // This optional block of code can be used to run
@@ -55,6 +63,16 @@ class AddDiariesForm extends StatelessWidget {
                         : null;
                   },
                 ),
+                if (_pickedImage != null)
+                  Container(
+                    margin: const EdgeInsets.only(top: 20),
+                    child: Image.file(
+                      _pickedImage!,
+                      width: 270,
+                      height: 370,
+                      fit: BoxFit.cover
+                    ),
+                  ),
               ],
             ),
           ),
@@ -64,6 +82,7 @@ class AddDiariesForm extends StatelessWidget {
         onPressed: () async {
           await pickImage();
         },
+        child: Icon(Icons.add_a_photo),
       ),
     );
   }

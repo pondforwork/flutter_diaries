@@ -160,7 +160,16 @@ class _MyHomePageState extends State<MyHomePage> {
                 strokeWidth: 1.5,
                 dotColor: Colors.grey,
                 activeDotColor: const Color.fromARGB(255, 240, 243, 255)),
-          )
+          ),
+          TextButton(
+              onPressed: () async {
+                List<Map<String, dynamic>> diaries =
+                    await _databaseHelper.getAllDiariesRaw();
+
+                print(diaries.length);
+                print("TEst");
+              },
+              child: Text("Button"))
         ],
       ),
       floatingActionButton: FloatingActionButton(
@@ -179,7 +188,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
         // // Do something with the retrieved data, for example, print it
 
-        child: Text("Test"),
+        child: const Icon(Icons.add),
       ),
     );
   }
