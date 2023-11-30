@@ -167,8 +167,11 @@ class _MyHomePageState extends State<MyHomePage> {
           // Call getAllDiariesRaw here
           List<Map<String, dynamic>> diaries =
               await _databaseHelper.getAllDiariesRaw();
-          _databaseHelper.close();
+
           print(diaries);
+          _databaseHelper.close();
+                //  _databaseHelper.insertData();
+
         },
         // _databaseHelper.insertData();
 
