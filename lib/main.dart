@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter_diaries/db/db_helper.dart';
 import 'package:flutter_diaries/screens/adddiaries.dart';
-import 'package:flutter_diaries/screens/reading.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 void main() {
@@ -10,9 +9,8 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  const MyApp({Key? key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -22,15 +20,13 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
         scaffoldBackgroundColor: Colors.yellow,
       ),
-      // theme: new ThemeData(scaffoldBackgroundColor: const Color(#FFEFEF)),
-
       home: const MyHomePage(title: 'Flutter Diaries'),
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
+  const MyHomePage({Key? key, required this.title});
 
   final String title;
 
@@ -39,6 +35,24 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  DatabaseHelper _databaseHelper = DatabaseHelper.instance;
+  List<Map<String, dynamic>> diaries = [];
+  int myCurrentIndex = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchDiaries();
+  }
+
+  Future<void> _fetchDiaries() async {
+    List<Map<String, dynamic>> diaries =
+        await _databaseHelper.getAllDiariesRaw();
+    setState(() {
+      this.diaries = diaries;
+    });
+  }
+
   final myItems = [
     {
       'image': 'assets/images/image01.jpg',
@@ -46,16 +60,6 @@ class _MyHomePageState extends State<MyHomePage> {
       'textDetail':
           'lorem20fasdfdsdfsafdsffgdjnfgsdnklgkljgkljdgjkfgdjlkgfd;jkgfdsjlkgfjklklgfgdjklgfdkjfgdsjklfgsdjklfgdsjklgfdsjlgdfljk'
     },
-    // {
-    //   'image': 'assets/images/image02.jpg',
-    //   'text': 'Text 2',
-    //   'textDetail': 'lorem20'
-    // },
-    // {
-    //   'image': 'assets/images/image03.jpg',
-    //   'text': 'Text 3',
-    //   'textDetail': 'lorem20'
-    // },
     {
       'image': 'assets/images/image04.png',
       'text': 'Text 4',
@@ -73,18 +77,9 @@ class _MyHomePageState extends State<MyHomePage> {
     },
   ];
 
-  int myCurrentIndex = 0;
-
   @override
   Widget build(BuildContext context) {
-    DatabaseHelper _databaseHelper =
-        DatabaseHelper.instance; // Create an instance of DatabaseHelper
-
     return Scaffold(
-      // appBar: AppBar(
-      //   backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-      //   title: Text(widget.title),
-      // ),
       body: Column(
         children: [
           const SizedBox(
@@ -102,41 +97,38 @@ class _MyHomePageState extends State<MyHomePage> {
                 });
               },
             ),
-            items: myItems.map((item) {
+            items: diaries.map((item) {
               return Builder(
                 builder: (BuildContext context) {
                   return GestureDetector(
                     onTap: () {
-                      print(myCurrentIndex);
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) {
-                        return FormScreen(
-                          imageData: myItems[myCurrentIndex],
-                        );
-                      }));
+                      // print(myCurrentIndex);
+                      // Navigator.push(context,
+                      //     MaterialPageRoute(builder: (context) {
+                      //   return FormScreen(
+                      //     imageData: myItems[myCurrentIndex],
+                      //   );
+                      // }));
                     },
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        ClipRRect(
-                          borderRadius: BorderRadius.circular(
-                              20.0), // Set your desired border radius
-
-                          child: Image.asset(
-                            item['image'] ?? '',
-                            width: 300,
-                            height: 400,
-                            fit: BoxFit
-                                .cover, // Use BoxFit.cover to maintain aspect ratio
-                          ),
-                        ), // Use null-aware operator
-                        const SizedBox(
-                            height:
-                                25), // Add some space between image and text
+                        // ClipRRect(
+                        //   borderRadius: BorderRadius.circular(20.0),
+                        //   child: Image.asset(
+                        //     item['text'] ?? '',
+                        //     width: 300,
+                        //     height: 400,
+                        //     fit: BoxFit.cover,
+                        //   ),
+                        // ),
+                        const SizedBox(height: 25),
                         Text(
-                          item['text'] ?? '', // Use null-aware operator
+                          item['title'] ?? '',
                           style: const TextStyle(
-                              fontSize: 30, fontWeight: FontWeight.bold),
+                            fontSize: 30,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                       ],
                     ),
@@ -152,42 +144,29 @@ class _MyHomePageState extends State<MyHomePage> {
             activeIndex: myCurrentIndex,
             count: myItems.length,
             effect: const SlideEffect(
-                spacing: 7.0,
-                radius: 90,
-                dotWidth: 10.0,
-                dotHeight: 10.0,
-                paintStyle: PaintingStyle.stroke,
-                strokeWidth: 1.5,
-                dotColor: Colors.grey,
-                activeDotColor: const Color.fromARGB(255, 240, 243, 255)),
+              spacing: 7.0,
+              radius: 90,
+              dotWidth: 10.0,
+              dotHeight: 10.0,
+              paintStyle: PaintingStyle.stroke,
+              strokeWidth: 1.5,
+              dotColor: Colors.grey,
+              activeDotColor: const Color.fromARGB(255, 240, 243, 255),
+            ),
           ),
           TextButton(
-              onPressed: () async {
-                List<Map<String, dynamic>> diaries =
-                    await _databaseHelper.getAllDiariesRaw();
-
-                print(diaries.length);
-                print("TEst");
-              },
-              child: Text("Button"))
+            onPressed: () async {
+              await _fetchDiaries();
+            },
+            child: Text("Refresh Data"),
+          ),
         ],
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () async {
-          // Call getAllDiariesRaw here
-          // List<Map<String, dynamic>> diaries =
-          //     await _databaseHelper.getAllDiariesRaw();
-
-          // print(diaries);
-          // _databaseHelper.close();
-          //  _databaseHelper.insertData();
+        onPressed: () {
           Navigator.push(context,
               MaterialPageRoute(builder: (context) => AddDiariesForm()));
         },
-        // _databaseHelper.insertData();
-
-        // // Do something with the retrieved data, for example, print it
-
         child: const Icon(Icons.add),
       ),
     );

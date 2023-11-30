@@ -49,4 +49,6 @@ CREATE TABLE diary (
 VALUES ( 'example.jpg', 'Example Title', 'This is a sample story');
 ''');
   }
+
+ 
 }
