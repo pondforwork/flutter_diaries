@@ -53,30 +53,6 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
-  final myItems = [
-    {
-      'image': 'assets/images/image01.jpg',
-      'text': 'Chilling On Holiday',
-      'textDetail':
-          'lorem20fasdfdsdfsafdsffgdjnfgsdnklgkljgkljdgjkfgdjlkgfd;jkgfdsjlkgfjklklgfgdjklgfdkjfgdsjklfgsdjklfgdsjklgfdsjlgdfljk'
-    },
-    {
-      'image': 'assets/images/image04.png',
-      'text': 'Text 4',
-      'textDetail': 'lorem20'
-    },
-    {
-      'image': 'assets/images/image05.png',
-      'text': 'Text 5',
-      'textDetail': 'lorem20'
-    },
-    {
-      'image': 'assets/images/image06.png',
-      'text': 'Text 6',
-      'textDetail': 'lorem20'
-    },
-  ];
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -137,12 +113,12 @@ class _MyHomePageState extends State<MyHomePage> {
               );
             }).toList(),
           ),
-          SizedBox(
+          const SizedBox(
             height: 150,
           ),
           AnimatedSmoothIndicator(
             activeIndex: myCurrentIndex,
-            count: myItems.length,
+            count: diaries.length,
             effect: const SlideEffect(
               spacing: 7.0,
               radius: 90,
@@ -159,7 +135,12 @@ class _MyHomePageState extends State<MyHomePage> {
               await _fetchDiaries();
             },
             child: Text("Refresh Data"),
-          ),
+          ),TextButton(
+            onPressed: () async {
+              await _databaseHelper.();
+            },
+            child: Text("Refresh Data"),
+          )
         ],
       ),
       floatingActionButton: FloatingActionButton(

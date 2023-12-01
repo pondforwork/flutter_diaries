@@ -1,13 +1,17 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:flutter_diaries/db/db_helper.dart';
 import 'package:image_picker/image_picker.dart';
 
 class AddDiariesForm extends StatefulWidget {
+  
   @override
   _AddDiariesFormState createState() => _AddDiariesFormState();
 }
 
 class _AddDiariesFormState extends State<AddDiariesForm> {
+      DatabaseHelper _databaseHelper = DatabaseHelper.instance;
+
   File? _pickedImage;
 
   Future<void> pickImage() async {
@@ -73,6 +77,12 @@ class _AddDiariesFormState extends State<AddDiariesForm> {
                       fit: BoxFit.cover
                     ),
                   ),
+                  TextButton(onPressed: (){
+                    _fetchDiaries();
+                  }, child: Text("getData"),),
+                   TextButton(onPressed: (){
+                    _databaseHelper.insertData();
+                  }, child: Text("Insert Data"),)
               ],
             ),
           ),
@@ -87,3 +97,10 @@ class _AddDiariesFormState extends State<AddDiariesForm> {
     );
   }
 }
+
+Future<void> _fetchDiaries() async {
+    DatabaseHelper _databaseHelper = DatabaseHelper.instance;
+    List<Map<String, dynamic>> diaries =
+        await _databaseHelper.getAllDiariesRaw();
+    print(diaries);
+  }
