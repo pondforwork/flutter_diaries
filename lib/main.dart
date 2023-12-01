@@ -53,8 +53,6 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
-  
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -65,11 +63,19 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
           diaries.isEmpty
               ? const Center(
-                  child: Text(
-                    'No data available.',
-                    style: TextStyle(fontSize: 18),
-                  ),
-                )
+                  child: Column(
+                  children: [
+                    SizedBox(
+                      height: 300,
+                    ),
+                    Center(
+                      child: Text(
+                        'No data available.',
+                        style: TextStyle(fontSize: 18),
+                      ),
+                    )
+                  ],
+                ))
               : CarouselSlider(
                   options: CarouselOptions(
                     autoPlay: false,
@@ -92,6 +98,13 @@ class _MyHomePageState extends State<MyHomePage> {
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
+                              Image.asset(
+                                item['image'] ?? '',
+                                width: 300,
+                                height: 400,
+                                fit: BoxFit
+                                    .cover, // Use BoxFit.cover to maintain aspect ratio
+                              ),
                               // Your image or content widget here
                               const SizedBox(height: 25),
                               Text(
@@ -111,20 +124,21 @@ class _MyHomePageState extends State<MyHomePage> {
           const SizedBox(
             height: 150,
           ),
-          AnimatedSmoothIndicator(
-            activeIndex: myCurrentIndex,
-            count: diaries.length,
-            effect: const SlideEffect(
-              spacing: 7.0,
-              radius: 90,
-              dotWidth: 10.0,
-              dotHeight: 10.0,
-              paintStyle: PaintingStyle.stroke,
-              strokeWidth: 1.5,
-              dotColor: Colors.grey,
-              activeDotColor: const Color.fromARGB(255, 240, 243, 255),
+          if (diaries.isNotEmpty)
+            AnimatedSmoothIndicator(
+              activeIndex: myCurrentIndex,
+              count: diaries.length,
+              effect: const SlideEffect(
+                spacing: 7.0,
+                radius: 90,
+                dotWidth: 10.0,
+                dotHeight: 10.0,
+                paintStyle: PaintingStyle.stroke,
+                strokeWidth: 1.5,
+                dotColor: Colors.grey,
+                activeDotColor: const Color.fromARGB(255, 240, 243, 255),
+              ),
             ),
-          ),
           TextButton(
             onPressed: () async {
               await _fetchDiaries();
@@ -154,6 +168,5 @@ class _MyHomePageState extends State<MyHomePage> {
         child: const Icon(Icons.add),
       ),
     );
-    
   }
 }

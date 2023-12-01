@@ -46,7 +46,14 @@ CREATE TABLE diary (
   insertData() async {
     final db = await instance.database;
     return await db.rawQuery('''INSERT INTO diary ( image, title, story)
-VALUES ( 'example.jpg', 'Example Title3', 'This is a sample story');
+VALUES ( '/Users/pond/Library/Developer/CoreSimulator/Devices/67809B79-A15B-4F35-B7D6-4E0370BB713E/data/Containers/Data/Application/11E0103D-6F4C-4B82-982A-BCB36FCEEF5C/tmp/image_picker_3DBD3EF0-8DD7-4CB2-872A-207260535534-78935-000000F3CBAF57E3.jpg', 'Example Title3', 'This is a sample story');
+''');
+  }
+
+  insertDataViaForm(String image,String title , String story) async {
+    final db = await instance.database;
+    return await db.rawQuery('''INSERT INTO diary ( image, title, story)
+VALUES ( '$image', '$title', '$story');
 ''');
   }
 

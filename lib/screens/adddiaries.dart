@@ -10,16 +10,21 @@ class AddDiariesForm extends StatefulWidget {
 }
 
 class _AddDiariesFormState extends State<AddDiariesForm> {
+  final titleFormController = TextEditingController();
+  final storyFromController = TextEditingController();
+  late String imgpath;
   DatabaseHelper _databaseHelper = DatabaseHelper.instance;
 
   File? _pickedImage;
 
   Future<void> pickImage() async {
     final image = await ImagePicker().pickImage(source: ImageSource.gallery);
+    print(image?.path);
     if (image != null) {
       setState(() {
         _pickedImage = File(image.path);
       });
+      imgpath = image.path;
     }
   }
 
@@ -50,6 +55,7 @@ class _AddDiariesFormState extends State<AddDiariesForm> {
                         ? 'Do not use the @ char.'
                         : null;
                   },
+                  controller: titleFormController,
                 ),
                 TextFormField(
                   decoration: const InputDecoration(
@@ -66,6 +72,7 @@ class _AddDiariesFormState extends State<AddDiariesForm> {
                         ? 'Do not use the @ char.'
                         : null;
                   },
+                  controller: storyFromController,
                 ),
                 if (_pickedImage != null)
                   Container(
@@ -84,13 +91,23 @@ class _AddDiariesFormState extends State<AddDiariesForm> {
                     _databaseHelper.insertData();
                     setState(() {
                       setState(() {
-                        // I need to set state here
                         Navigator.pop(context,
                             true); // Close the current screen and return true
                       });
                     });
                   },
                   child: Text("Insert Data"),
+                ),
+                TextButton(
+                  onPressed: () {
+                    var title = titleFormController.text;
+                    var story = storyFromController.text;
+                    print(title);
+                    print(story);
+                    print(imgpath);
+                    // _databaseHelper.insertData();
+                  },
+                  child: Text("Save"),
                 )
               ],
             ),
