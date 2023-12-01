@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_diaries/db/db_helper.dart';
 import 'package:flutter_diaries/main.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:path_provider/path_provider.dart';
+
 
 class AddDiariesForm extends StatefulWidget {
   @override
@@ -203,20 +205,40 @@ class _AddDiariesFormState extends State<AddDiariesForm> {
   }
 
   _save() async {
-    if (imgpath != "") {
-      var title = titleFormController.text;
-      var story = storyFromController.text;
-      _databaseHelper.insertDataViaForm(imgpath, title, story);
-      setState(() {
-        Navigator.pop(
-            context, true); // Close the current screen and return true
-      });
-    } else {
-      imgpath = "";
-      ScaffoldMessenger.of(context).showSnackBar(snackBar);
-      print("Snackbar");
-    }
+  if (imgpath != "") {
+    var title = titleFormController.text;
+    var story = storyFromController.text;
+
+    // Move the picked image to the application's folder
+    String newPath = await movePickedImage(imgpath);
+
+    // Insert the diary entry with the new image path
+    _databaseHelper.insertDataViaForm(newPath, title, story);
+
+    setState(() {
+      Navigator.pop(context, true); // Close the current screen and return true
+    });
+  } else {
+    imgpath = "";
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+    print("Snackbar");
   }
+}
+
+Future<String> movePickedImage(String originalPath) async {
+  // Get the application's documents directory
+  String documentsDirectory = await getApplicationDocumentsDirectory().then((value) => value.path);
+
+  // Construct the new path within the app's storage
+  String fileName = originalPath.split('/').last;
+  String newPath = '$documentsDirectory/$fileName';
+
+  // Move the file to the new path
+  await File(originalPath).copy(newPath);
+
+  return newPath;
+}
+
 }
 
 Future<void> _fetchDiaries() async {

@@ -2,6 +2,7 @@ import 'package:flutter_diaries/models/diaries.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 
+//comment
 class DatabaseHelper {
   static final DatabaseHelper instance = DatabaseHelper._init();
 
@@ -18,6 +19,9 @@ class DatabaseHelper {
   Future<Database> _initDB(String filePath) async {
     final dbPath = await getDatabasesPath();
     final path = join(dbPath, filePath);
+    print("dbpath");
+    print(dbPath);
+
     return await openDatabase(path, version: 1, onCreate: _createDB);
   }
 
@@ -43,6 +47,17 @@ CREATE TABLE diary (
     return await db.rawQuery('SELECT * FROM diary');
   }
 
+  void printDiaries() async {
+    List<Map<String, dynamic>> diaries =
+        await DatabaseHelper.instance.getAllDiariesRaw();
+    print(diaries);
+
+    // Or you can use the then method:
+    // DatabaseHelper.instance.getAllDiariesRaw().then((diaries) {
+    //   print(diaries);
+    // });
+  }
+
   insertData() async {
     final db = await instance.database;
     return await db.rawQuery('''INSERT INTO diary ( image, title, story)
@@ -50,11 +65,19 @@ VALUES ( '/Users/pond/Library/Developer/CoreSimulator/Devices/67809B79-A15B-4F35
 ''');
   }
 
-  insertDataViaForm(String image, String title, String story) async {
+//   insertDataViaForm(String image, String title, String story) async {
+//     final db = await instance.database;
+//     return await db.rawQuery('''INSERT INTO diary ( image, title, story)
+// VALUES ( '$image', '$title', '$story');
+// ''');
+//   }
+
+  insertDataViaForm(String imageFileName, String title, String story) async {
     final db = await instance.database;
-    return await db.rawQuery('''INSERT INTO diary ( image, title, story)
-VALUES ( '$image', '$title', '$story');
-''');
+    return await db.insert(
+      'diary',
+      {'image': imageFileName, 'title': title, 'story': story},
+    );
   }
 
   Future deleteAllDiaries() async {

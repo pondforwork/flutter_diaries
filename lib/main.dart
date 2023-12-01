@@ -1,6 +1,9 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter_diaries/db/db_helper.dart';
+import 'package:flutter_diaries/models/diaries.dart';
 import 'package:flutter_diaries/screens/adddiaries.dart';
 import 'package:flutter_diaries/screens/reading.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
@@ -47,17 +50,33 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void initState() {
     super.initState();
-    _fetchDiaries();
+    // _fetchDiaries();
+    // print("Diart");
+    // print(diaries);
     // _databaseHelper.deleteAllDiaries();
   }
 
   Future<void> _fetchDiaries() async {
-    List<Map<String, dynamic>> diaries =
-        await _databaseHelper.getAllDiariesRaw();
-    setState(() {
-      this.diaries = diaries;
-    });
+  List<Map<String, dynamic>> diariesDB =
+      await _databaseHelper.getAllDiariesRaw();
+  this.diaries = diariesDB;
+
+  if (diaries.isNotEmpty) {
+    // Assuming diaries list has at least one entry
+    Map<String, dynamic> firstDiary = diaries[0];
+    String imagePath = firstDiary[NoteTable.image];
+
+    // Use the imagePath to create a File object
+    File imageFile = File(imagePath);
+
+    // Now you can use imageFile as needed, for example, display it in an Image widget
+    print("Image File Path: $imagePath");
+    print("Image File Exists: ${imageFile.existsSync()}");
   }
+
+  // print(diaries);
+  // print("db");
+}
 
   @override
   Widget build(BuildContext context) {
@@ -118,12 +137,11 @@ class _MyHomePageState extends State<MyHomePage> {
                           onLongPress: () {
                             print("Long Press");
                           },
-                          
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Image.asset(
-                                item['image'] ?? '',
+                              Text(Image.asset.toString()),
+                              Image.asset(item['image']?? '',
                                 width: 300,
                                 height: 400,
                                 fit: BoxFit
@@ -163,13 +181,14 @@ class _MyHomePageState extends State<MyHomePage> {
                 activeDotColor: Color.fromARGB(255, 0, 0, 0),
               ),
             ),
-          // TextButton(
-          //   onPressed: () async {
-          //     await _fetchDiaries();
-          //     // generatePalette();
-          //   },
-          //   child: Text("Refresh Data"),
-          // ),
+          TextButton(
+            onPressed: () async {
+              // _databaseHelper.insertData();
+              // await _fetchDiaries();
+              // generatePalette();
+            },
+            child: Text("Refresh Data"),
+          ),
           TextButton(
             onPressed: () async {
               await _databaseHelper.deleteAllDiaries();
