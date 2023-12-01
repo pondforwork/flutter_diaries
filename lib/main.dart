@@ -4,6 +4,7 @@ import 'package:flutter_diaries/db/db_helper.dart';
 import 'package:flutter_diaries/screens/adddiaries.dart';
 import 'package:flutter_diaries/screens/reading.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+import 'package:palette_generator/palette_generator.dart';
 
 void main() {
   runApp(const MyApp());
@@ -85,6 +86,8 @@ class _MyHomePageState extends State<MyHomePage> {
                     enlargeCenterPage: true,
                     aspectRatio: 3 / 4,
                     onPageChanged: (index, reason) {
+                      _databaseHelper.selectImagePath(index);
+                      print("change");
                       setState(() {
                         myCurrentIndex = index;
                       });
@@ -151,6 +154,7 @@ class _MyHomePageState extends State<MyHomePage> {
           TextButton(
             onPressed: () async {
               await _fetchDiaries();
+              // generatePalette();
             },
             child: Text("Refresh Data"),
           ),
@@ -177,5 +181,16 @@ class _MyHomePageState extends State<MyHomePage> {
         child: const Icon(Icons.add),
       ),
     );
+  }
+
+  Future<PaletteGenerator> generatePalette(String imagePath) async {
+    // Load image from file
+    final imageProvider = AssetImage(imagePath);
+    final paletteGenerator = await PaletteGenerator.fromImageProvider(
+      imageProvider,
+      maximumColorCount: 20,
+    );
+
+    return paletteGenerator;
   }
 }

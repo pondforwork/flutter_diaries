@@ -50,18 +50,49 @@ VALUES ( '/Users/pond/Library/Developer/CoreSimulator/Devices/67809B79-A15B-4F35
 ''');
   }
 
-  insertDataViaForm(String image,String title , String story) async {
+  insertDataViaForm(String image, String title, String story) async {
     final db = await instance.database;
     return await db.rawQuery('''INSERT INTO diary ( image, title, story)
 VALUES ( '$image', '$title', '$story');
 ''');
   }
 
-
   Future deleteAllDiaries() async {
     final db = await instance.database;
     await db.delete('diary');
   }
 
- 
+//   selectImagePath(int id) async {
+//     final db = await instance.database;
+//     String path = (await db.rawQuery('''
+//         SELECT image FROM diary WHERE _id = $id;
+// );
+// ''')) as String;
+//     print(path);
+//   }
+
+  Future<String?> selectImagePath(int id) async {
+    print("Id");
+    print(id);
+    final db = await instance.database;
+    final int plusindex = 1;
+    List<Map<String, dynamic>> result = await db.rawQuery('''
+    
+SELECT image
+FROM diary
+ORDER BY image DESC
+LIMIT 1 OFFSET $id;
+
+  ''');
+//WHERE _id = $id
+    if (result.isNotEmpty) {
+      // Extract the 'image' value from the result
+      String imagePath = result.first['image'] as String;
+
+      print(imagePath);
+      return imagePath;
+    } else {
+      return null; // Return null if no matching entry is found
+    }
+  }
 }
