@@ -97,12 +97,31 @@ class _AddDiariesFormState extends State<AddDiariesForm> {
                     child: Image.file(_pickedImage!,
                         width: 270, height: 370, fit: BoxFit.cover),
                   ),
+                if(_pickedImage == null)
+                  Container(
+                    margin: const EdgeInsets.only(top: 20),
+                    child: Card( child: Container(
+                    height: 420.0,
+                    width: 320,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Center(
+                         child: Text("Please Select Image"),
+                        ),
+                      ],
+                    ),
+                  ),)
+                  ),
+                  
                 TextButton(
                   onPressed: () {
                     _fetchDiaries();
                   },
                   child: Text("getData"),
                 ),
+                
                 // TextButton(
                 //   onPressed: () {
                 //     _databaseHelper.insertData();

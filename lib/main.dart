@@ -145,7 +145,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 paintStyle: PaintingStyle.stroke,
                 strokeWidth: 1.5,
                 dotColor: Colors.grey,
-                activeDotColor: const Color.fromARGB(255, 240, 243, 255),
+                activeDotColor: Color.fromARGB(255, 0, 0, 0),
               ),
             ),
           TextButton(
