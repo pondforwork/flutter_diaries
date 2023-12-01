@@ -53,6 +53,8 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
+  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -61,58 +63,51 @@ class _MyHomePageState extends State<MyHomePage> {
           const SizedBox(
             height: 80,
           ),
-          CarouselSlider(
-            options: CarouselOptions(
-              autoPlay: false,
-              height: 500,
-              enlargeCenterPage: true,
-              aspectRatio: 3 / 4,
-              onPageChanged: (index, reason) {
-                setState(() {
-                  myCurrentIndex = index;
-                });
-              },
-            ),
-            items: diaries.map((item) {
-              return Builder(
-                builder: (BuildContext context) {
-                  return GestureDetector(
-                    onTap: () {
-                      // print(myCurrentIndex);
-                      // Navigator.push(context,
-                      //     MaterialPageRoute(builder: (context) {
-                      //   return FormScreen(
-                      //     imageData: myItems[myCurrentIndex],
-                      //   );
-                      // }));
+          diaries.isEmpty
+              ? const Center(
+                  child: Text(
+                    'No data available.',
+                    style: TextStyle(fontSize: 18),
+                  ),
+                )
+              : CarouselSlider(
+                  options: CarouselOptions(
+                    autoPlay: false,
+                    height: 500,
+                    enlargeCenterPage: true,
+                    aspectRatio: 3 / 4,
+                    onPageChanged: (index, reason) {
+                      setState(() {
+                        myCurrentIndex = index;
+                      });
                     },
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        // ClipRRect(
-                        //   borderRadius: BorderRadius.circular(20.0),
-                        //   child: Image.asset(
-                        //     item['text'] ?? '',
-                        //     width: 300,
-                        //     height: 400,
-                        //     fit: BoxFit.cover,
-                        //   ),
-                        // ),
-                        const SizedBox(height: 25),
-                        Text(
-                          item['title'] ?? '',
-                          style: const TextStyle(
-                            fontSize: 30,
-                            fontWeight: FontWeight.bold,
+                  ),
+                  items: diaries.map((item) {
+                    return Builder(
+                      builder: (BuildContext context) {
+                        return GestureDetector(
+                          onTap: () {
+                            // Your onTap logic here
+                          },
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              // Your image or content widget here
+                              const SizedBox(height: 25),
+                              Text(
+                                item['title'] ?? '',
+                                style: const TextStyle(
+                                  fontSize: 30,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ],
                           ),
-                        ),
-                      ],
-                    ),
-                  );
-                },
-              );
-            }).toList(),
-          ),
+                        );
+                      },
+                    );
+                  }).toList(),
+                ),
           const SizedBox(
             height: 150,
           ),
@@ -135,7 +130,8 @@ class _MyHomePageState extends State<MyHomePage> {
               await _fetchDiaries();
             },
             child: Text("Refresh Data"),
-          ),TextButton(
+          ),
+          TextButton(
             onPressed: () async {
               await _databaseHelper.deleteAllDiaries();
             },
@@ -144,12 +140,20 @@ class _MyHomePageState extends State<MyHomePage> {
         ],
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.push(context,
-              MaterialPageRoute(builder: (context) => AddDiariesForm()));
+        onPressed: () async {
+          final result = await Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => AddDiariesForm(),
+            ),
+          );
+          if (result == true) {
+            await _fetchDiaries();
+          }
         },
         child: const Icon(Icons.add),
       ),
     );
+    
   }
 }

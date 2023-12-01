@@ -1,16 +1,16 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_diaries/db/db_helper.dart';
+import 'package:flutter_diaries/main.dart';
 import 'package:image_picker/image_picker.dart';
 
 class AddDiariesForm extends StatefulWidget {
-  
   @override
   _AddDiariesFormState createState() => _AddDiariesFormState();
 }
 
 class _AddDiariesFormState extends State<AddDiariesForm> {
-      DatabaseHelper _databaseHelper = DatabaseHelper.instance;
+  DatabaseHelper _databaseHelper = DatabaseHelper.instance;
 
   File? _pickedImage;
 
@@ -70,19 +70,28 @@ class _AddDiariesFormState extends State<AddDiariesForm> {
                 if (_pickedImage != null)
                   Container(
                     margin: const EdgeInsets.only(top: 20),
-                    child: Image.file(
-                      _pickedImage!,
-                      width: 270,
-                      height: 370,
-                      fit: BoxFit.cover
-                    ),
+                    child: Image.file(_pickedImage!,
+                        width: 270, height: 370, fit: BoxFit.cover),
                   ),
-                  TextButton(onPressed: (){
+                TextButton(
+                  onPressed: () {
                     _fetchDiaries();
-                  }, child: Text("getData"),),
-                   TextButton(onPressed: (){
+                  },
+                  child: Text("getData"),
+                ),
+                TextButton(
+                  onPressed: () {
                     _databaseHelper.insertData();
-                  }, child: Text("Insert Data"),)
+                    setState(() {
+                      setState(() {
+                        // I need to set state here
+                        Navigator.pop(context,
+                            true); // Close the current screen and return true
+                      });
+                    });
+                  },
+                  child: Text("Insert Data"),
+                )
               ],
             ),
           ),
@@ -99,8 +108,7 @@ class _AddDiariesFormState extends State<AddDiariesForm> {
 }
 
 Future<void> _fetchDiaries() async {
-    DatabaseHelper _databaseHelper = DatabaseHelper.instance;
-    List<Map<String, dynamic>> diaries =
-        await _databaseHelper.getAllDiariesRaw();
-    print(diaries);
-  }
+  DatabaseHelper _databaseHelper = DatabaseHelper.instance;
+  List<Map<String, dynamic>> diaries = await _databaseHelper.getAllDiariesRaw();
+  print(diaries);
+}

@@ -46,7 +46,7 @@ CREATE TABLE diary (
   insertData() async {
     final db = await instance.database;
     return await db.rawQuery('''INSERT INTO diary ( image, title, story)
-VALUES ( 'example.jpg', 'Example Title2', 'This is a sample story');
+VALUES ( 'example.jpg', 'Example Title3', 'This is a sample story');
 ''');
   }
 
