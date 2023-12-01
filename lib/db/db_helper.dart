@@ -49,7 +49,12 @@ CREATE TABLE diary (
 VALUES ( 'example.jpg', 'Example Title2', 'This is a sample story');
 ''');
   }
-  
+
+
+  Future deleteAllDiaries() async {
+    final db = await instance.database;
+    await db.delete('diary');
+  }
 
  
 }

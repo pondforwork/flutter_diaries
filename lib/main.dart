@@ -137,9 +137,9 @@ class _MyHomePageState extends State<MyHomePage> {
             child: Text("Refresh Data"),
           ),TextButton(
             onPressed: () async {
-              await _databaseHelper.();
+              await _databaseHelper.deleteAllDiaries();
             },
-            child: Text("Refresh Data"),
+            child: Text("Delete"),
           )
         ],
       ),
