@@ -20,7 +20,8 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
-        scaffoldBackgroundColor: Colors.yellow,
+        scaffoldBackgroundColor: Color(0xff797a65),
+        // scaffoldBackgroundColor: Colors.yellow,
       ),
       home: const MyHomePage(title: 'Flutter Diaries'),
     );
@@ -87,13 +88,12 @@ class _MyHomePageState extends State<MyHomePage> {
                     aspectRatio: 3 / 4,
                     onPageChanged: (index, reason) async {
                       print("Test");
+
                       String? path =
                           await _databaseHelper.selectImagePath(index);
-                      print(path);
-                      print("change");
-                      // generatePalette(imagePath);
                       setState(() {
                         myCurrentIndex = index;
+                        generatePalette(path!);
                       });
                     },
                   ),
@@ -187,14 +187,25 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  Future<PaletteGenerator> generatePalette(String imagePath) async {
+  Future<PaletteGenerator> generatePalette(String imagePath) {
     // Load image from file
     final imageProvider = AssetImage(imagePath);
-    final paletteGenerator = await PaletteGenerator.fromImageProvider(
+    final paletteGenerator = PaletteGenerator.fromImageProvider(
       imageProvider,
-      maximumColorCount: 20,
+      maximumColorCount: 1,
     );
-
+    print(paletteGenerator);
     return paletteGenerator;
+  }
+
+  Color getColorFromPalette(PaletteGenerator? paletteGenerator) {
+    if (paletteGenerator != null && paletteGenerator.colors.isNotEmpty) {
+      PaletteColor pickedColor = paletteGenerator.colors.first as PaletteColor;
+      return pickedColor.color;
+    } else {
+      // Return a default color if no color is found
+      return Colors
+          .grey; // You can replace this with your desired default color
+    }
   }
 }
