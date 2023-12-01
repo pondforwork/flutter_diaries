@@ -20,8 +20,8 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
-        scaffoldBackgroundColor: Color(0xff797a65),
-        // scaffoldBackgroundColor: Colors.yellow,
+        // scaffoldBackgroundColor: Color(0xff797a65),
+        scaffoldBackgroundColor: Colors.yellow,
       ),
       home: const MyHomePage(title: 'Flutter Diaries'),
     );
@@ -41,6 +41,8 @@ class _MyHomePageState extends State<MyHomePage> {
   DatabaseHelper _databaseHelper = DatabaseHelper.instance;
   List<Map<String, dynamic>> diaries = [];
   int myCurrentIndex = 0;
+
+  String? path;
 
   @override
   void initState() {
@@ -63,7 +65,7 @@ class _MyHomePageState extends State<MyHomePage> {
       body: Column(
         children: [
           const SizedBox(
-            height: 80,
+            height: 170,
           ),
           diaries.isEmpty
               ? const Center(
@@ -88,12 +90,9 @@ class _MyHomePageState extends State<MyHomePage> {
                     aspectRatio: 3 / 4,
                     onPageChanged: (index, reason) async {
                       print("Test");
-
-                      String? path =
-                          await _databaseHelper.selectImagePath(index);
                       setState(() {
                         myCurrentIndex = index;
-                        generatePalette(path!);
+                        // generatePalette(path!);
                       });
                     },
                   ),
@@ -101,16 +100,25 @@ class _MyHomePageState extends State<MyHomePage> {
                     return Builder(
                       builder: (BuildContext context) {
                         return GestureDetector(
-                          onTap: () {
+                          onTap: () async {
+                            // path = await _databaseHelper.selectImagePath(myCurrentIndex);
+                            // generatePalette(path!);
                             // Your onTap logic here
                             Navigator.push(
                               context,
                               MaterialPageRoute(
                                 builder: (context) => FormScreen(
-                                    imageData: diaries[myCurrentIndex]),
+                                  imageData: diaries[myCurrentIndex],
+                                  iamgePath:
+                                      '$path', // Replace with your actual value
+                                ),
                               ),
                             );
                           },
+                          onLongPress: () {
+                            print("Long Press");
+                          },
+                          
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
@@ -155,16 +163,19 @@ class _MyHomePageState extends State<MyHomePage> {
                 activeDotColor: Color.fromARGB(255, 0, 0, 0),
               ),
             ),
-          TextButton(
-            onPressed: () async {
-              await _fetchDiaries();
-              // generatePalette();
-            },
-            child: Text("Refresh Data"),
-          ),
+          // TextButton(
+          //   onPressed: () async {
+          //     await _fetchDiaries();
+          //     // generatePalette();
+          //   },
+          //   child: Text("Refresh Data"),
+          // ),
           TextButton(
             onPressed: () async {
               await _databaseHelper.deleteAllDiaries();
+              setState(() {
+                _fetchDiaries();
+              });
             },
             child: Text("Delete"),
           )

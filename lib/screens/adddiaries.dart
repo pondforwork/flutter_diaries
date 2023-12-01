@@ -76,7 +76,7 @@ class _AddDiariesFormState extends State<AddDiariesForm> {
                 ),
                 TextFormField(
                   decoration: const InputDecoration(
-                    icon: Icon(Icons.person),
+                    icon: Icon(Icons.book),
                     hintText: 'How it\'s going',
                     labelText: 'Details',
                   ),
@@ -149,12 +149,12 @@ class _AddDiariesFormState extends State<AddDiariesForm> {
                         )),
                   ),
 
-                TextButton(
-                  onPressed: () {
-                    _fetchDiaries();
-                  },
-                  child: Text("getData"),
-                ),
+                // TextButton(
+                //   onPressed: () {
+                //     _fetchDiaries();
+                //   },
+                //   child: Text("getData"),
+                // ),
 
                 // TextButton(
                 //   onPressed: () {
@@ -168,26 +168,26 @@ class _AddDiariesFormState extends State<AddDiariesForm> {
                 //   },
                 //   child: Text("Insert Data"),
                 // ),
-                TextButton(
-                  onPressed: () {
-                    if (imgpath != "") {
-                      var title = titleFormController.text;
-                      var story = storyFromController.text;
+                // TextButton(
+                //   onPressed: () {
+                //     if (imgpath != "") {
+                //       var title = titleFormController.text;
+                //       var story = storyFromController.text;
 
-                      _databaseHelper.insertDataViaForm(imgpath, title, story);
-                      setState(() {
-                        Navigator.pop(context,
-                            true); // Close the current screen and return true
-                      });
-                    } else {
-                      imgpath = "";
-                      ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                      print("Snackbar");
-                    }
-                    // _databaseHelper.insertData();
-                  },
-                  child: const Text("Save"),
-                )
+                //       _databaseHelper.insertDataViaForm(imgpath, title, story);
+                //       setState(() {
+                //         Navigator.pop(context,
+                //             true); // Close the current screen and return true
+                //       });
+                //     } else {
+                //       imgpath = "";
+                //       ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                //       print("Snackbar");
+                //     }
+                //     // _databaseHelper.insertData();
+                //   },
+                //   child: const Text("Save"),
+                // )
               ],
             ),
           ),

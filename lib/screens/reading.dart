@@ -3,8 +3,13 @@ import 'package:flutter/material.dart';
 class FormScreen extends StatelessWidget {
   final Map<String, dynamic> imageData;
 
-  const FormScreen({Key? key, required this.imageData}) : super(key: key);
+  final String iamgePath;
 
+  const FormScreen({
+    Key? key,
+    required this.imageData,
+    required this.iamgePath,
+  }) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,7 +26,7 @@ class FormScreen extends StatelessWidget {
                   height: 80,
                 ),
                 Card(
-                  color: Colors.cyan, // Change this to the color you desire
+                  color: Colors.white, // Change this to the color you desire
 
                   child: Container(
                     height: 420.0,
@@ -70,12 +75,14 @@ class FormScreen extends StatelessWidget {
                       ),
                     ),
                   ),
-                )
+                ),
               ],
             ),
           ),
         ),
       ),
     );
+    
   }
+  
 }
