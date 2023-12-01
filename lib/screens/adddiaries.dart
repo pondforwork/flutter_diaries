@@ -20,7 +20,7 @@ class _AddDiariesFormState extends State<AddDiariesForm> {
   final titleFormController = TextEditingController();
   final storyFromController = TextEditingController();
   late String imgpath = "";
-  DatabaseHelper _databaseHelper = DatabaseHelper.instance;
+  final DatabaseHelper _databaseHelper = DatabaseHelper.instance;
 
   File? _pickedImage;
 
@@ -89,39 +89,61 @@ class _AddDiariesFormState extends State<AddDiariesForm> {
                         ? 'Do not use the @ char.'
                         : null;
                   },
+                  // margin: const EdgeInsets.only(top: 20),
+                  //   child: Image.file(_pickedImage!,
+                  //       width: 270, height: 370, fit: BoxFit.cover),
                   controller: storyFromController,
                 ),
                 if (_pickedImage != null)
                   Container(
-                    margin: const EdgeInsets.only(top: 20),
-                    child: Image.file(_pickedImage!,
-                        width: 270, height: 370, fit: BoxFit.cover),
-                  ),
-                if(_pickedImage == null)
-                  Container(
-                    margin: const EdgeInsets.only(top: 20),
-                    child: Card( child: Container(
-                    height: 420.0,
-                    width: 320,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Center(
-                         child: Text("Please Select Image"),
+                    child: Column(children: [SizedBox(height: 40,),Card(
+                      color: const Color.fromARGB(255, 255, 255, 255), // Change this to the color you desire
+                      child: Container(
+                        height: 420.0,
+                        width: 320,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,``
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Center(
+                              child: Image.file(
+                                _pickedImage!,
+                                width: 290,
+                                height: 390,
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                          ],
                         ),
-                      ],
-                    ),
-                  ),)
+                      ),
+                    ),],)
                   ),
-                  
+                if (_pickedImage == null)
+                  Container(
+                      margin: const EdgeInsets.only(top: 20),
+                      child: Card(
+                        child: Container(
+                          height: 420.0,
+                          width: 320,
+                          child: const Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Center(
+                                child: Text("Please Select Image"),
+                              ),
+                            ],
+                          ),
+                        ),
+                      )),
+
                 TextButton(
                   onPressed: () {
                     _fetchDiaries();
                   },
                   child: Text("getData"),
                 ),
-                
+
                 // TextButton(
                 //   onPressed: () {
                 //     _databaseHelper.insertData();
@@ -139,9 +161,7 @@ class _AddDiariesFormState extends State<AddDiariesForm> {
                     if (imgpath != "") {
                       var title = titleFormController.text;
                       var story = storyFromController.text;
-                      print(title);
-                      print(story);
-                      print(imgpath);
+                      
                       _databaseHelper.insertDataViaForm(imgpath, title, story);
                       setState(() {
                         Navigator.pop(context,
@@ -154,7 +174,7 @@ class _AddDiariesFormState extends State<AddDiariesForm> {
                     }
                     // _databaseHelper.insertData();
                   },
-                  child: Text("Save"),
+                  child: const Text("Save"),
                 )
               ],
             ),
@@ -165,7 +185,7 @@ class _AddDiariesFormState extends State<AddDiariesForm> {
         onPressed: () async {
           await pickImage();
         },
-        child: Icon(Icons.add_a_photo),
+        child: const Icon(Icons.add_a_photo),
       ),
     );
   }
