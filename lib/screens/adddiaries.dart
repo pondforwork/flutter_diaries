@@ -102,7 +102,7 @@ class _AddDiariesFormState extends State<AddDiariesForm> {
                         height: 420.0,
                         width: 320,
                         child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,``
+                          mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             Center(
@@ -119,23 +119,28 @@ class _AddDiariesFormState extends State<AddDiariesForm> {
                     ),],)
                   ),
                 if (_pickedImage == null)
-                  Container(
-                      margin: const EdgeInsets.only(top: 20),
-                      child: Card(
-                        child: Container(
-                          height: 420.0,
-                          width: 320,
-                          child: const Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Center(
-                                child: Text("Please Select Image"),
-                              ),
-                            ],
+                  GestureDetector(
+                    onTap: () async {
+                      await pickImage();
+                    },
+                    child: Container(
+                        margin: const EdgeInsets.only(top: 20),
+                        child: Card(
+                          child: Container(
+                            height: 420.0,
+                            width: 320,
+                            child: const Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Center(
+                                  child: Text("Please Select Image"),
+                                ),
+                              ],
+                            ),
                           ),
-                        ),
-                      )),
+                        )),
+                  ),
 
                 TextButton(
                   onPressed: () {
