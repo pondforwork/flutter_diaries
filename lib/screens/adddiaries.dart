@@ -10,15 +10,22 @@ class AddDiariesForm extends StatefulWidget {
 }
 
 class _AddDiariesFormState extends State<AddDiariesForm> {
+  @override
+  void initState() {
+    imgpath = "";
+    print(imgpath);
+    super.initState();
+  }
+
   final titleFormController = TextEditingController();
   final storyFromController = TextEditingController();
-  late String imgpath;
+  late String imgpath = "";
   DatabaseHelper _databaseHelper = DatabaseHelper.instance;
 
   File? _pickedImage;
 
   Future<void> pickImage() async {
-    final image = await ImagePicker().pickImage(source: ImageSource.gallery);
+    var image = await ImagePicker().pickImage(source: ImageSource.gallery);
     print(image?.path);
     if (image != null) {
       setState(() {
@@ -27,6 +34,16 @@ class _AddDiariesFormState extends State<AddDiariesForm> {
       imgpath = image.path;
     }
   }
+
+  final snackBar = SnackBar(
+    content: const Text('Please Select Image'),
+    action: SnackBarAction(
+      label: 'Undo',
+      onPressed: () {
+        // Some code to undo the change.
+      },
+    ),
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -86,25 +103,36 @@ class _AddDiariesFormState extends State<AddDiariesForm> {
                   },
                   child: Text("getData"),
                 ),
+                // TextButton(
+                //   onPressed: () {
+                //     _databaseHelper.insertData();
+                //     setState(() {
+                //       setState(() {
+                //         Navigator.pop(context,
+                //             true); // Close the current screen and return true
+                //       });
+                //     });
+                //   },
+                //   child: Text("Insert Data"),
+                // ),
                 TextButton(
                   onPressed: () {
-                    _databaseHelper.insertData();
-                    setState(() {
+                    if (imgpath != "") {
+                      var title = titleFormController.text;
+                      var story = storyFromController.text;
+                      print(title);
+                      print(story);
+                      print(imgpath);
+                      _databaseHelper.insertDataViaForm(imgpath, title, story);
                       setState(() {
                         Navigator.pop(context,
                             true); // Close the current screen and return true
                       });
-                    });
-                  },
-                  child: Text("Insert Data"),
-                ),
-                TextButton(
-                  onPressed: () {
-                    var title = titleFormController.text;
-                    var story = storyFromController.text;
-                    print(title);
-                    print(story);
-                    print(imgpath);
+                    } else {
+                      imgpath = "";
+                      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                      print("Snackbar");
+                    }
                     // _databaseHelper.insertData();
                   },
                   child: Text("Save"),

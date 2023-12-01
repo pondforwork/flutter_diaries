@@ -48,7 +48,7 @@ class FormScreen extends StatelessWidget {
                 Container(
                   child: Center(
                     child: Text(
-                      imageData['text']!,
+                      imageData['title']!,
                       style: const TextStyle(
                         fontSize: 30,
                         fontWeight: FontWeight.bold,
@@ -61,7 +61,7 @@ class FormScreen extends StatelessWidget {
                     child: Padding(
                       padding: EdgeInsets.only(left: 15.0, right: 15.0),
                       child: Text(
-                        imageData['textDetail']!,
+                        imageData['story']!,
                         style: const TextStyle(
                           fontSize: 15,
                           fontWeight: FontWeight.bold,

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter_diaries/db/db_helper.dart';
 import 'package:flutter_diaries/screens/adddiaries.dart';
+import 'package:flutter_diaries/screens/reading.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 void main() {
@@ -43,6 +44,7 @@ class _MyHomePageState extends State<MyHomePage> {
   void initState() {
     super.initState();
     _fetchDiaries();
+    // _databaseHelper.deleteAllDiaries();
   }
 
   Future<void> _fetchDiaries() async {
@@ -94,6 +96,13 @@ class _MyHomePageState extends State<MyHomePage> {
                         return GestureDetector(
                           onTap: () {
                             // Your onTap logic here
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => FormScreen(
+                                    imageData: diaries[myCurrentIndex]),
+                              ),
+                            );
                           },
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
