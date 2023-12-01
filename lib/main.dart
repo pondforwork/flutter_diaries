@@ -85,9 +85,13 @@ class _MyHomePageState extends State<MyHomePage> {
                     height: 500,
                     enlargeCenterPage: true,
                     aspectRatio: 3 / 4,
-                    onPageChanged: (index, reason) {
-                      _databaseHelper.selectImagePath(index);
+                    onPageChanged: (index, reason) async {
+                      print("Test");
+                      String? path =
+                          await _databaseHelper.selectImagePath(index);
+                      print(path);
                       print("change");
+                      // generatePalette(imagePath);
                       setState(() {
                         myCurrentIndex = index;
                       });

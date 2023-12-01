@@ -72,24 +72,18 @@ VALUES ( '$image', '$title', '$story');
 //   }
 
   Future<String?> selectImagePath(int id) async {
-    print("Id");
-    print(id);
     final db = await instance.database;
-    final int plusindex = 1;
     List<Map<String, dynamic>> result = await db.rawQuery('''
-    
 SELECT image
 FROM diary
 ORDER BY image DESC
 LIMIT 1 OFFSET $id;
-
   ''');
 //WHERE _id = $id
     if (result.isNotEmpty) {
       // Extract the 'image' value from the result
       String imagePath = result.first['image'] as String;
-
-      print(imagePath);
+      // print(imagePath);
       return imagePath;
     } else {
       return null; // Return null if no matching entry is found
