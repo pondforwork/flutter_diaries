@@ -38,7 +38,7 @@ class _AddDiariesFormState extends State<AddDiariesForm> {
   final snackBar = SnackBar(
     content: const Text('Please Select Image'),
     action: SnackBarAction(
-      label: 'Undo',
+      label: 'Dismiss',
       onPressed: () {
         // Some code to undo the change.
       },
@@ -96,28 +96,35 @@ class _AddDiariesFormState extends State<AddDiariesForm> {
                 ),
                 if (_pickedImage != null)
                   Container(
-                    child: Column(children: [SizedBox(height: 40,),Card(
-                      color: const Color.fromARGB(255, 255, 255, 255), // Change this to the color you desire
-                      child: Container(
-                        height: 420.0,
-                        width: 320,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Center(
-                              child: Image.file(
-                                _pickedImage!,
-                                width: 290,
-                                height: 390,
-                                fit: BoxFit.cover,
+                      child: Column(
+                    children: [
+                      SizedBox(
+                        height: 40,
+                      ),
+                      Card(
+                        color: const Color.fromARGB(255, 255, 255,
+                            255), // Change this to the color you desire
+                        child: Container(
+                          height: 420.0,
+                          width: 320,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Center(
+                                child: Image.file(
+                                  _pickedImage!,
+                                  width: 290,
+                                  height: 390,
+                                  fit: BoxFit.cover,
+                                ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       ),
-                    ),],)
-                  ),
+                    ],
+                  )),
                 if (_pickedImage == null)
                   GestureDetector(
                     onTap: () async {
@@ -166,7 +173,7 @@ class _AddDiariesFormState extends State<AddDiariesForm> {
                     if (imgpath != "") {
                       var title = titleFormController.text;
                       var story = storyFromController.text;
-                      
+
                       _databaseHelper.insertDataViaForm(imgpath, title, story);
                       setState(() {
                         Navigator.pop(context,
@@ -188,11 +195,27 @@ class _AddDiariesFormState extends State<AddDiariesForm> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
-          await pickImage();
+          await _save();
         },
-        child: const Icon(Icons.add_a_photo),
+        child: const Icon(Icons.save),
       ),
     );
+  }
+
+  _save() async {
+    if (imgpath != "") {
+      var title = titleFormController.text;
+      var story = storyFromController.text;
+      _databaseHelper.insertDataViaForm(imgpath, title, story);
+      setState(() {
+        Navigator.pop(
+            context, true); // Close the current screen and return true
+      });
+    } else {
+      imgpath = "";
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      print("Snackbar");
+    }
   }
 }
 

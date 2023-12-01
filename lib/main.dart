@@ -72,7 +72,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     ),
                     Center(
                       child: Text(
-                        'No data available.',
+                        'No Diaries Here. Try Add One!!',
                         style: TextStyle(fontSize: 18),
                       ),
                     )

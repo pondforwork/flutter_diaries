@@ -76,14 +76,6 @@ class FormScreen extends StatelessWidget {
           ),
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          // Add any functionality you want when the FAB is pressed
-        },
-        child: Icon(Icons.add), // You can change the icon as needed
-        backgroundColor:
-            Colors.deepPurple, // You can change the background color as needed
-      ),
     );
   }
 }
