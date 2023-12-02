@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_diaries/db/db_helper.dart';
 import 'package:flutter_diaries/main.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:path_provider/path_provider.dart';
 
 class AddDiariesForm extends StatefulWidget {
   @override
@@ -23,7 +24,7 @@ class _AddDiariesFormState extends State<AddDiariesForm> {
   final DatabaseHelper _databaseHelper = DatabaseHelper.instance;
 
   File? _pickedImage;
-
+  
   Future<void> pickImage() async {
     var image = await ImagePicker().pickImage(source: ImageSource.gallery);
     print(image?.path);
@@ -31,8 +32,23 @@ class _AddDiariesFormState extends State<AddDiariesForm> {
       setState(() {
         _pickedImage = File(image.path);
       });
-      imgpath = image.path;
+
+      // Save the picked image to a permanent location
+      print("OldPath");
+      print(image.path);
+      await _saveImageToPermanentLocation(image.path);
     }
+  }
+
+  Future<void> _saveImageToPermanentLocation(String imagePath) async {
+    Directory appDocDir = await getApplicationDocumentsDirectory();
+    String appDocPath = appDocDir.path;
+    String newImagePath = '$appDocPath/${DateTime.now().millisecondsSinceEpoch}.jpg';
+    File(imagePath).copy(newImagePath);
+    print('Image saved to: $newImagePath');
+    print("my Imgpath");
+    imgpath = newImagePath;
+    print(imgpath);
   }
 
   final snackBar = SnackBar(

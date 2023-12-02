@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter_diaries/db/db_helper.dart';
@@ -20,8 +22,8 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
-        scaffoldBackgroundColor: Color(0xff797a65),
-        // scaffoldBackgroundColor: Colors.yellow,
+        // scaffoldBackgroundColor: Color(0xff797a65),
+        scaffoldBackgroundColor: Colors.yellow,
       ),
       home: const MyHomePage(title: 'Flutter Diaries'),
     );
@@ -93,7 +95,6 @@ class _MyHomePageState extends State<MyHomePage> {
                           await _databaseHelper.selectImagePath(index);
                       setState(() {
                         myCurrentIndex = index;
-                        generatePalette(path!);
                       });
                     },
                   ),
@@ -113,14 +114,19 @@ class _MyHomePageState extends State<MyHomePage> {
                           },
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Image.asset(
-                                item['image'] ?? '',
-                                width: 300,
-                                height: 400,
-                                fit: BoxFit
-                                    .cover, // Use BoxFit.cover to maintain aspect ratio
+                            children: 
+                            [
+                              // Text(item['image'] ??''),
+                              Image.file(File(item['image'] ??'')
+                              
                               ),
+                              // Image.asset(
+                              //   item['image'] ?? '',
+                              //   width: 300,
+                              //   height: 400,
+                              //   fit: BoxFit
+                              //       .cover, // Use BoxFit.cover to maintain aspect ratio
+                              // ),
                               // Your image or content widget here
                               const SizedBox(height: 25),
                               Text(
@@ -138,7 +144,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   }).toList(),
                 ),
           const SizedBox(
-            height: 150,
+            height: 130,
           ),
           if (diaries.isNotEmpty)
             AnimatedSmoothIndicator(
@@ -155,19 +161,19 @@ class _MyHomePageState extends State<MyHomePage> {
                 activeDotColor: Color.fromARGB(255, 0, 0, 0),
               ),
             ),
-          TextButton(
-            onPressed: () async {
-              await _fetchDiaries();
-              // generatePalette();
-            },
-            child: Text("Refresh Data"),
-          ),
-          TextButton(
-            onPressed: () async {
-              await _databaseHelper.deleteAllDiaries();
-            },
-            child: Text("Delete"),
-          )
+          // TextButton(
+          //   onPressed: () async {
+          //     await _fetchDiaries();
+          //     // generatePalette();
+          //   },
+          //   child: Text("Refresh Data"),
+          // ),
+          // TextButton(
+          //   onPressed: () async {
+          //     await _databaseHelper.deleteAllDiaries();
+          //   },
+          //   child: Text("Delete"),
+          // )
         ],
       ),
       floatingActionButton: FloatingActionButton(
@@ -187,25 +193,5 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  Future<PaletteGenerator> generatePalette(String imagePath) {
-    // Load image from file
-    final imageProvider = AssetImage(imagePath);
-    final paletteGenerator = PaletteGenerator.fromImageProvider(
-      imageProvider,
-      maximumColorCount: 1,
-    );
-    print(paletteGenerator);
-    return paletteGenerator;
-  }
-
-  Color getColorFromPalette(PaletteGenerator? paletteGenerator) {
-    if (paletteGenerator != null && paletteGenerator.colors.isNotEmpty) {
-      PaletteColor pickedColor = paletteGenerator.colors.first as PaletteColor;
-      return pickedColor.color;
-    } else {
-      // Return a default color if no color is found
-      return Colors
-          .grey; // You can replace this with your desired default color
-    }
-  }
+  
 }
