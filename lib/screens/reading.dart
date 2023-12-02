@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 
 class FormScreen extends StatelessWidget {
@@ -8,7 +10,7 @@ class FormScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.green,
+      backgroundColor: Colors.yellow,
       // appBar: AppBar(
       //   title: Text(imageData['text']),
       // ),
@@ -21,7 +23,7 @@ class FormScreen extends StatelessWidget {
                   height: 80,
                 ),
                 Card(
-                  color: Colors.cyan, // Change this to the color you desire
+                  color: const Color.fromARGB(255, 255, 255, 255), // Change this to the color you desire
 
                   child: Container(
                     height: 420.0,
@@ -31,12 +33,19 @@ class FormScreen extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Center(
-                          child: Image.asset(
-                            imageData['image']!,
+                          child: Image.file(
+                            File(imageData['image'] ?? ''),
                             width: 300,
                             height: 400,
                             fit: BoxFit.cover,
                           ),
+
+                          // child: Image.asset(
+                          //   imageData['image']!,
+                          //   width: 300,
+                          //   height: 400,
+                          //   fit: BoxFit.cover,
+                          // ),
                         ),
                       ],
                     ),

@@ -103,6 +103,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       builder: (BuildContext context) {
                         return GestureDetector(
                           onTap: () {
+                            print("Push");
                             // Your onTap logic here
                             Navigator.push(
                               context,
@@ -114,11 +115,13 @@ class _MyHomePageState extends State<MyHomePage> {
                           },
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
-                            children: 
-                            [
+                            children: [
                               // Text(item['image'] ??''),
-                              Image.file(File(item['image'] ??'')
-                              
+                              Image.file(
+                                File(item['image'] ?? ''),
+                                width: 300,
+                                height: 400,
+                                fit: BoxFit.cover,
                               ),
                               // Image.asset(
                               //   item['image'] ?? '',
@@ -192,6 +195,4 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
     );
   }
-
-  
 }
