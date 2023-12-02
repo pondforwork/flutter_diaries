@@ -113,6 +113,10 @@ class _MyHomePageState extends State<MyHomePage> {
                               ),
                             );
                           },
+                          onLongPress: (){
+                            showDeleteDialog(context,1);
+                            print("Delete");
+                          },
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
@@ -196,3 +200,38 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 }
+
+showDeleteDialog(BuildContext context, int index) {
+    // set up the button
+    Widget okButton = TextButton(
+      child: Text("OK"),
+      onPressed: () {
+        // _dbHelper.deleteByIndex(index);
+        // setState(() {});
+        Navigator.pop(context);
+      },
+    );
+    // set up the Cancel button
+    Widget cancelButton = TextButton(
+      child: Text("Cancel"),
+      onPressed: () {
+        Navigator.pop(context);
+      },
+    );
+    // set up the AlertDialog
+    AlertDialog alert = AlertDialog(
+      title: Text("Delete This To Do?"),
+      content: Text("Are You Sure?"),
+      actions: [
+        cancelButton,
+        okButton,
+      ],
+    );
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
